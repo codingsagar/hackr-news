@@ -29,12 +29,11 @@ export default function SavedArticles() {
   const [news, setNews] = useState<NewsItem[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  if (!isAuthenticated) {
-    toast.error("You are not logged in !");
-    router.push("/login");
-  }
-
   useEffect(() => {
+    if (!isAuthenticated) {
+      toast.error("You are not logged in !");
+      router.push("/login");
+    }
     setIsLoading(true);
     fetchNews().then((res) => {
       res.sort(
@@ -70,16 +69,16 @@ export default function SavedArticles() {
                 <span>Upvotes : {item.upvotes}</span>
                 &nbsp;| &nbsp;
                 <span>
-                  {item.comments.length > 0 ? item.comments : "0 comments"}
+                  {item?.comments?.length > 0 ? item?.comments : "0 comments"}
                 </span>
                 &nbsp; | &nbsp;
                 <span className="text-neutral-500 dark:text-neutral-300">
-                  Posted {dayjs(item?.postedOn).fromNow()}
+                  Posted {dayjs(item?.postedOn)?.fromNow()}
                 </span>
                 <div className="flex gap-x-3 my-4">
                   <Button
                     as={Link}
-                    href={item.hackerNewsUrl}
+                    href={item?.hackerNewsUrl}
                     size="sm"
                     color="primary"
                     target="_blank"
@@ -88,7 +87,7 @@ export default function SavedArticles() {
                   </Button>
                   <Button
                     as={Link}
-                    href={item.url}
+                    href={item?.url}
                     size="sm"
                     color="secondary"
                     target="_blank"
