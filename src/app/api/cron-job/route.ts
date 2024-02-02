@@ -18,7 +18,8 @@ import {
 import { scrapeHackerNews } from "@/lib/scraper";
 import { getFirestore } from "firebase-admin/firestore";
 
-import serviceAccount from "../../../../serviceKey.json";
+const serviceAccount = JSON.parse(process.env.NEXT_PUBLIC_FIREBASE_SERVICE_KEY as string);
+
 
 const defaultApp =
   getApps().length === 0
